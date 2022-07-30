@@ -13,14 +13,14 @@ function IOError(exception)
 			   "\nStack:\n"		  +	stack, true);
 }
 
-function Display(_width, _height) constructor
+function Display(_width, _height, _scale_gui=false) constructor
 {
 	#region Struct variables
 	
 	w=0; h=0;
 	rm=0; min_rm=0; max_rm=0;
 	
-	scale_gui=true;
+	scale_gui=_scale_gui;
 	fullscreen=false;
 	
 	#endregion
@@ -31,6 +31,7 @@ function Display(_width, _height) constructor
 	if (DisplayHeight mod h != 0)
 	{ var d = round(DisplayHeight / h); h = DisplayHeight / d; }
 	if (h & 1) h ++;
+	if !scale_gui { display_set_gui_size(w, h) }
 	
 	max_rm = floor(DisplayWidth / w);
 	for (var i = max_rm; i > 0; i --)
@@ -76,7 +77,6 @@ function Display(_width, _height) constructor
 		var width = get_width(), height = get_height();
 		surface_resize(application_surface, width, height);
 		window_set_size(width, height);
-		if scale_gui { display_set_gui_size(w, h) }
 	}
 	
 	function increment_resolution()
